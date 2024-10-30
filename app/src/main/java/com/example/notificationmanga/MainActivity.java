@@ -33,14 +33,25 @@ public class MainActivity extends AppCompatActivity {
 
         jsonTextView = findViewById(R.id.jsonTextView);
         Button fetchDataButton = findViewById(R.id.fetchDataButton);
+        Button fetchLatestChapterButton = findViewById(R.id.fetchLatestChapterButton);
 
-        // Set up button click listener
+        // Set up button click listener for fetching all data
         fetchDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Run the HTTP request task on button click
                 ExecutorService executor = Executors.newSingleThreadExecutor();
-                executor.execute(new HTTPReqTask(MainActivity.this));
+                executor.execute(new FetchManga(MainActivity.this));
+            }
+        });
+
+        // Set up button click listener for fetching latest chapters
+        fetchLatestChapterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Run the fetch latest chapters task
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                executor.execute(new FetchLatestChaptersTask(MainActivity.this));
             }
         });
     }
@@ -50,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(() -> jsonTextView.setText(text));
     }
 
-    private static class HTTPReqTask implements Runnable {
+    private static class FetchManga implements Runnable {
         private final MainActivity activity;
 
-        HTTPReqTask(MainActivity activity) {
+        FetchManga(MainActivity activity) {
             this.activity = activity;
         }
 
@@ -66,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
             try {
 //                URL url = new URL("https://dummyjson.com/users/1"); // Example for a single user
 //                URL url = new URL("https://api.mangadex.org/manga/3486c56e-47db-4d62-a9b4-71ea44acbaec"); // Example for a single user
-                URL url = new URL("https://pastebin.com/raw/FWQaLvcX");
+//                URL url = new URL("https://pastebin.com/raw/FWQaLvcX"); // get Mangalist Without latest chap
+                URL url = new URL("https://pastebin.com/raw/EV3wZywe"); // get Mangalist Without latest chap
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
 
@@ -105,7 +117,15 @@ public class MainActivity extends AppCompatActivity {
                     if (latestChaptersArray.length() > 0) {
                         displayText.append("Latest Chapters:\n");
                         for (int j = 0; j < latestChaptersArray.length(); j++) {
-                            displayText.append("  - ").append(latestChaptersArray.getString(j)).append("\n");
+                            JSONObject chapterObject = latestChaptersArray.getJSONObject(j);
+                            String chapterId = chapterObject.getString("id");
+                            String chapterName = chapterObject.getString("name");
+                            String chapterNum = chapterObject.getString("chapter");
+//                            displayText.append("  - ").append(latestChaptersArray.getString(j)).append("\n");
+//                            displayText.append(" - ").append(chapterId).append("\n");
+//                            displayText.append("   ").append(chapterName).append("\n");
+                            displayText.append("  - Chapter: ").append(chapterNum).append("\n")
+                                    .append("    Name: ").append(chapterName).append("\n\n");
                         }
                     } else {
                         displayText.append("Latest Chapters: None\n");
@@ -162,6 +182,68 @@ public class MainActivity extends AppCompatActivity {
 
                 // Update the TextView with POST response
                 activity.updateTextView("POST Response:\n" + jsonResponse.toString(4));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+        }
+
+
+    }
+
+    // New class to fetch latest chapters
+    private static class FetchLatestChaptersTask implements Runnable {
+        private final MainActivity activity;
+
+        FetchLatestChaptersTask(MainActivity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        public void run() {
+            HttpURLConnection urlConnection = null;
+            StringBuilder response;
+
+            // GET Request for the latest chapters
+            try {
+                URL url = new URL("https://pastebin.com/raw/jNVTiMbP"); // Adjust this to your actual endpoint
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+
+                int code = urlConnection.getResponseCode();
+                if (code != 200) {
+                    throw new IOException("Invalid response from server: " + code);
+                }
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        urlConnection.getInputStream(), StandardCharsets.UTF_8));
+                response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                // Parse JSON response
+                JSONObject jsonResponse = new JSONObject(response.toString());
+                JSONArray latestChaptersArray = jsonResponse.getJSONArray("latestChapters");
+
+                StringBuilder displayText = new StringBuilder();
+                displayText.append("Latest Chapters:\n");
+                for (int i = 0; i < latestChaptersArray.length(); i++) {
+                    JSONObject chapterObject = latestChaptersArray.getJSONObject(i);
+                    String title = chapterObject.getString("title");
+                    String chapterNumber = chapterObject.getString("chapterNumber");
+
+                    displayText.append(" - ").append(title)
+                            .append(" (Chapter ").append(chapterNumber).append(")\n");
+                }
+
+                // Update the TextView with latest chapters response
+                activity.updateTextView(displayText.toString());
 
             } catch (Exception e) {
                 e.printStackTrace();
