@@ -2,6 +2,8 @@ package com.example.notificationmanga;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,11 +30,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        jsonTextView = findViewById(R.id.jsonTextView); // Initializing TextView
+        jsonTextView = findViewById(R.id.jsonTextView);
+        Button fetchDataButton = findViewById(R.id.fetchDataButton);
 
-        // Using Executors to handle background thread tasks
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(new HTTPReqTask(this));
+        // Set up button click listener
+        fetchDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Run the HTTP request task on button click
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                executor.execute(new HTTPReqTask(MainActivity.this));
+            }
+        });
     }
 
     // Helper method to update TextView
@@ -55,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
             // GET Request to DummyJSON
             try {
 //                URL url = new URL("https://dummyjson.com/users/1"); // Example for a single user
-                URL url = new URL("https://api.mangadex.org/manga/3486c56e-47db-4d62-a9b4-71ea44acbaec"); // Example for a single user
+//                URL url = new URL("https://api.mangadex.org/manga/3486c56e-47db-4d62-a9b4-71ea44acbaec"); // Example for a single user
+                URL url = new URL("https://pastebin.com/raw/FWQaLvcX");
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
 
