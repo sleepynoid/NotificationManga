@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Run the HTTP request task on button click
                 ExecutorService executor = Executors.newSingleThreadExecutor();
-                executor.execute(new FetchManga(MainActivity.this));
+                executor.execute(new FetchManga(MainActivity.this,"https://pastebin.com/raw/EV3wZywe"));
             }
         });
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Run the fetch latest chapters task
                 ExecutorService executor = Executors.newSingleThreadExecutor();
-                executor.execute(new FetchLatestChaptersTask(MainActivity.this));
+                executor.execute(new FetchLatestChaptersTask(MainActivity.this,"https://pastebin.com/raw/jNVTiMbP"));
             }
         });
     }
@@ -63,9 +64,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static class FetchManga implements Runnable {
         private final MainActivity activity;
+        public URL url = null;
 
-        FetchManga(MainActivity activity) {
+        FetchManga(MainActivity activity, String url) {
             this.activity = activity;
+            try {
+                this.url = new URL(url);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
@@ -78,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 //                URL url = new URL("https://dummyjson.com/users/1"); // Example for a single user
 //                URL url = new URL("https://api.mangadex.org/manga/3486c56e-47db-4d62-a9b4-71ea44acbaec"); // Example for a single user
 //                URL url = new URL("https://pastebin.com/raw/FWQaLvcX"); // get Mangalist Without latest chap
-                URL url = new URL("https://pastebin.com/raw/EV3wZywe"); // get Mangalist Without latest chap
+//                url = new URL("https://pastebin.com/raw/EV3wZywe"); // get Mangalist Without latest chap
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
 
@@ -198,9 +205,15 @@ public class MainActivity extends AppCompatActivity {
     // New class to fetch latest chapters
     private static class FetchLatestChaptersTask implements Runnable {
         private final MainActivity activity;
+        public URL url = null;
 
-        FetchLatestChaptersTask(MainActivity activity) {
+        FetchLatestChaptersTask(MainActivity activity, String url) {
             this.activity = activity;
+            try {
+                this.url = new URL(url);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
@@ -210,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
             // GET Request for the latest chapters
             try {
-                URL url = new URL("https://pastebin.com/raw/jNVTiMbP"); // Adjust this to your actual endpoint
+//                URL url = new URL("https://pastebin.com/raw/jNVTiMbP"); // Adjust this to your actual endpoint
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
 
