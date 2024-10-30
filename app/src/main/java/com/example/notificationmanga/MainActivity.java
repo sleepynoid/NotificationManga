@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -83,11 +84,38 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Parse JSON response
+//                JSONObject jsonResponse = new JSONObject(response.toString());
+//                Log.i("GET Response", jsonResponse.toString());
                 JSONObject jsonResponse = new JSONObject(response.toString());
-                Log.i("GET Response", jsonResponse.toString());
+                JSONArray dataArray = jsonResponse.getJSONArray("data");
+
+                StringBuilder displayText = new StringBuilder();
+                for (int i = 0; i < dataArray.length(); i++) {
+                    JSONObject mangaObject = dataArray.getJSONObject(i);
+                    String title = mangaObject.getString("title");
+                    String description = mangaObject.getString("description");
+                    String coverArtAlt = mangaObject.getJSONObject("cover_art").getString("alt");
+
+                    displayText.append("Title: ").append(title).append("\n")
+                            .append("Description: ").append(description).append("\n")
+                            .append("Cover Alt: ").append(coverArtAlt).append("\n\n");
+
+                    // Add LatestChapters if present
+                    JSONArray latestChaptersArray = mangaObject.getJSONArray("latestChapters");
+                    if (latestChaptersArray.length() > 0) {
+                        displayText.append("Latest Chapters:\n");
+                        for (int j = 0; j < latestChaptersArray.length(); j++) {
+                            displayText.append("  - ").append(latestChaptersArray.getString(j)).append("\n");
+                        }
+                    } else {
+                        displayText.append("Latest Chapters: None\n");
+                    }
+
+                    displayText.append("\n"); // Separate entries
+                }
 
                 // Update the TextView with GET response
-                activity.updateTextView("GET Response:\n" + jsonResponse.toString(4));
+                activity.updateTextView("GET Response:\n" + displayText.toString());
 
             } catch (Exception e) {
                 e.printStackTrace();
