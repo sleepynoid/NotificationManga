@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Run the fetch latest chapters task
-                ExecutorService executor = Executors.newSingleThreadExecutor();
-                executor.execute(new FetchLatestChaptersTask(MainActivity.this,"https://pastebin.com/raw/jNVTiMbP"));
+                ExecutorService test = Executors.newSingleThreadExecutor();
+                test.execute(new NetworkThread(MainActivity.this));
             }
         });
     }
