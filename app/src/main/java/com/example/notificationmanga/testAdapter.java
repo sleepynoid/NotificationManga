@@ -34,7 +34,7 @@ public class testAdapter extends RecyclerView.Adapter<testAdapter.MyViewHolder> 
         Manga manga = mangaArrayList.get(position);
         holder.textView.setText(manga.title);
         holder.textView2.setText(manga.description);
-        holder.textView3.setText(manga.id);
+//        holder.textView3.setText(manga.id);
 
         // Assuming coverArt is a drawable resource ID; if it's a URL, use a library like Glide/Picasso
 //        int imageResource = context.getResources().getIdentifier(manga.coverArt, "drawable", context.getPackageName());

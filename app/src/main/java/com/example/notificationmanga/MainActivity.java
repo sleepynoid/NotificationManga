@@ -271,7 +271,12 @@
 
 package com.example.notificationmanga;
 
+import static com.example.notificationmanga.R.id.updateButton;
+
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -286,13 +291,24 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.mRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setVisibility(View.GONE);
+        Button updateButton = findViewById(R.id.updateButton);
+
 
         // Sample data for testing
         ArrayList<Manga> mangaList = new ArrayList<>();
-        mangaList.add(new Manga("1", "Title 1", "Description 1"));
-        mangaList.add(new Manga("2", "Title 2", "Description 2"));
+        mangaList.add(new Manga("1", "Centuria", "Chapter 28"));
+        mangaList.add(new Manga("2", "Rebuild World", "Chapter 63"));
+        mangaList.add(new Manga("3", "Super Ball Girl", "Chapter 38"));
 
         testAdapter adapter = new testAdapter(this, mangaList);
         recyclerView.setAdapter(adapter);
+
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }
