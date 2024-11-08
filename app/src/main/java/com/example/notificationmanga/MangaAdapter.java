@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class testAdapter extends RecyclerView.Adapter<testAdapter.MyViewHolder> {
+public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MyViewHolder> {
     Context context;
     ArrayList<Manga> mangaArrayList;
 
-    public testAdapter(Context context, ArrayList<Manga> mangaArrayList) {
+    public MangaAdapter(Context context, ArrayList<Manga> mangaArrayList) {
         this.context = context;
         this.mangaArrayList = mangaArrayList;
     }
@@ -33,7 +33,7 @@ public class testAdapter extends RecyclerView.Adapter<testAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Manga manga = mangaArrayList.get(position);
         holder.textView.setText(manga.title);
-        holder.textView2.setText(manga.description);
+        holder.textView2.setText(manga.latestChap.chapter);
 //        holder.textView3.setText(manga.id);
 
         // Assuming coverArt is a drawable resource ID; if it's a URL, use a library like Glide/Picasso

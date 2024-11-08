@@ -16,14 +16,25 @@
 
     <Button
         android:id="@+id/updateButton"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="32dp"
-        android:text="Update"
+        android:text="Get Latest Chapter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/mRecycleView"
-        app:layout_constraintVertical_bias="0.96" />
+        app:layout_constraintVertical_bias="0.929" />
 
+    <Button
+        android:id="@+id/readALlButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Read All"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateButton"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

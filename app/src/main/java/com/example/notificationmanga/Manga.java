@@ -23,10 +23,18 @@ public class Manga {
     public String description;
     public String coverArt;
     public Chapter latestChap;
+
     public Manga(String id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
+    }
+
+    public Manga(String id, String title, String description, Chapter latestChap) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.latestChap = latestChap;
     }
 
     public static String fetchManga(String url) throws IOException {
@@ -52,7 +60,8 @@ public class Manga {
                     builder.append(line);
                 }
                 result = builder.toString();
-                Log.i("MangaFetching", result);
+//                Log.i("MangaFetching", result);
+                System.out.println("fetching manga"+result);
             }
         } finally {
             if (stream != null) stream.close();
@@ -63,23 +72,36 @@ public class Manga {
 
     public static ArrayList<Manga> convertToArrayList(String str) {
         if (str == null || str.trim().isEmpty()) {
-            Log.e("MangaFetching", "Received an empty or blank JSON response.");
+            System.out.println("Received an empty or blank JSON response.");
             return null; // or handle it as you need
         }
-        ArrayList<Manga> mangaList = new ArrayList<Manga>();
+        ArrayList<Manga> mangaList = new ArrayList<>();
         try {
             JSONObject jsonResponse = new JSONObject(str);
             JSONArray dataArray = jsonResponse.getJSONArray("data");
-            StringBuilder displayText = new StringBuilder();
+
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject mangaObject = dataArray.getJSONObject(i);
                 String title = mangaObject.getString("title");
                 String description = mangaObject.getString("description");
-//                String coverArtAlt = mangaObject.getJSONObject("cover_art").getString("alt");
-                mangaList.add(new Manga(mangaObject.getString("id"),title,description));
+                String id = mangaObject.getString("id");
+
+                // Check if latestChapters is an array and has at least one element
+                Chapter latestChap = null;
+                JSONArray latestChaptersArray = mangaObject.getJSONArray("latestChapters");
+                if (latestChaptersArray.length() > 0) {
+                    JSONObject chapObject = latestChaptersArray.getJSONObject(0);
+                    String chapterId = chapObject.getString("id");
+                    String chapterName = chapObject.getString("name");
+                    String chapterNum = chapObject.getString("chapter");
+                    latestChap = new Chapter(chapterId, chapterName, chapterNum);
+                }
+
+                // Create a Manga object with the latest chapter information
+                mangaList.add(new Manga(id, title, description, latestChap));
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error parsing JSON", e);
         }
         return mangaList;
     }
