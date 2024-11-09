@@ -3,6 +3,7 @@ package com.example.notificationmanga;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,11 +25,16 @@ public class MangaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manga_activity);
 
-        RecyclerView recyclerView = findViewById(R.id.mRecycleView);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setVisibility(View.GONE);
         Button updateButton = findViewById(R.id.updateButton);
-
 
         // Sample data for testing
 //        ArrayList<Manga> mangaList = new ArrayList<>();
