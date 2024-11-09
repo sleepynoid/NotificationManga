@@ -33,10 +33,10 @@
                 android:text="Check Latest Chapter" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/MenuTwoButton"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="Info Manga" />
 
         </LinearLayout>
 

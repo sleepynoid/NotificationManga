@@ -27,7 +27,7 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MyViewHolder
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycle_view, parent, false);
+        View view = inflater.inflate(R.layout.manga_view, parent, false);
         return new MyViewHolder(view);
     }
 

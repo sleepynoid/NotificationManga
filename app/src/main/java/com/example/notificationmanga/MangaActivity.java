@@ -3,6 +3,8 @@ package com.example.notificationmanga;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
@@ -34,7 +36,9 @@ public class MangaActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setVisibility(View.GONE);
+
         Button updateButton = findViewById(R.id.updateButton);
+        Button readAll = findViewById(R.id.readAllButton);
 
         // Sample data for testing
 //        ArrayList<Manga> mangaList = new ArrayList<>();
@@ -56,8 +60,21 @@ public class MangaActivity extends AppCompatActivity {
                 recyclerView.setVisibility(View.VISIBLE);
             }
         });
+
+        readAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mangaList.isEmpty()) {
+                    Toast.makeText(MangaActivity.this, "There no Manga", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                mangaList.removeAll(MangaActivity.this.mangaList);
+                MangaActivity.this.adapter.notifyDataSetChanged();
+                Toast.makeText(MangaActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-    private static class Fetch implements Runnable {
+    public static class Fetch implements Runnable {
         final MangaActivity mangaActivity;
         public Fetch(MangaActivity activity) {
             this.mangaActivity = activity;

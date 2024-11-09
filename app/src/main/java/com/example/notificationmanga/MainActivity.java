@@ -15,13 +15,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button1 = findViewById(R.id.MenuOnebutton);
-        button1.setOnClickListener(new View.OnClickListener() {
+        Button MenuOne = findViewById(R.id.MenuOnebutton);
+        MenuOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intentMenuOne = new Intent(MainActivity.this, MangaActivity.class);
                 Intent intentMenuOne = new Intent(MainActivity.this, MangaActivity.class);
                 startActivity(intentMenuOne);
+            }
+        });
+
+        Button MenuTwo = findViewById(R.id.MenuTwoButton);
+        MenuTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentMenuTwo = new Intent(MainActivity.this, MangaInfoActivity.class);
+                startActivity(intentMenuTwo);
             }
         });
     }
