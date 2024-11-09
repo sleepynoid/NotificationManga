@@ -1,51 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"> <!-- Centers content within the parent -->
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"> <!-- Centers the CardView itself -->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"> <!-- Centers content within the CardView -->
 
             <TextView
-                android:id="@+id/jsonTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="JSON Response will appear here"
-                android:textSize="16sp"
-                android:layout_centerInParent="true" />
-
-<!--            <Button-->
-<!--                android:id="@+id/fetchDataButton"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="16dp"-->
-<!--                android:padding="16dp"-->
-<!--                android:text="Fetch List Manga" />-->
-            <!--                android:layout_alignParentBottom="true"-->
-            <!--                android:layout_centerHorizontal="true"-->
+                android:text="Menu"
+                android:textSize="50dp"
+                android:textAlignment="center" />
 
             <Button
-                android:id="@+id/fetchDataButton"
-                android:layout_width="match_parent"
+                android:id="@+id/button"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="Fetch List Manga" />
+                android:text="Check Latest Chapter" />
 
             <Button
-                android:id="@+id/fetchLatestChapterButton"
-                android:layout_width="match_parent"
+                android:id="@+id/button2"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="Fetch Latest Manga Chapter" />
-            <!--                android:textAlignment="center"/>-->
+                android:text="Button" />
+
         </LinearLayout>
-    </ScrollView>
 
-</RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
