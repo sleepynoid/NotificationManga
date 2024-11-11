@@ -1,6 +1,7 @@
 package com.example.notificationmanga;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,8 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Manga manga = mangaArrayList.get(position);
         holder.textView.setText(manga.title);
-        holder.textView2.setText(manga.latestChap.chapter);
+
+        holder.textView2.setText(String.format("Chapter %s %s", manga.latestChap.chapter, manga.latestChap.name));
 //        holder.textView3.setText(manga.id);
 
         // Assuming coverArt is a drawable resource ID; if it's a URL, use a library like Glide/Picasso
@@ -44,11 +46,18 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MyViewHolder
 
         holder.itemView.setOnClickListener(v -> {
             Toast.makeText(context, "Clicked: " + manga.title, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(context, MangaDetail.class);
+            intent.putExtra("MANGA_ID", manga.id);
+            intent.putExtra("MANGA_TITLE", manga.title);
+            intent.putExtra("MANGA_DESCRIPTION", manga.description);
+            intent.putExtra("MANGA_IMAGE",R.drawable.ic_launcher_background);
+
+            context.startActivity(intent);
         });
 
         holder.readButton.setOnClickListener(v -> {
             Toast.makeText(context, "Read " + manga.title, Toast.LENGTH_SHORT).show();
-//            holder.itemView.setVisibility(View.GONE);
             // Remove item from the list and notify the adapter
             mangaArrayList.remove(position);
             notifyItemRemoved(position);

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <!-- ImageView positioned at the top of the card -->
+    <ImageView
+        android:id="@+id/imgDetailManga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <!-- Title TextView below the ImageView -->
+    <TextView
+        android:id="@+id/titleDetailManga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Title Manga"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Description TextView below the Title TextView -->
+    <TextView
+        android:id="@+id/descriptionDetailManga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:text="Description Manga"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/LinkShareButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Share" />
+
+    <Button
+        android:id="@+id/LinkReadButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Read" />
+</LinearLayout>

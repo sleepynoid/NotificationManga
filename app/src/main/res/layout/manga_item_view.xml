@@ -28,7 +28,6 @@
                 android:id="@+id/imgInfoManga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -36,13 +35,14 @@
             <!-- Title TextView aligned next to the ImageView -->
 
             <!-- Latest Chapter TextView below the Title TextView -->
+
             <TextView
                 android:id="@+id/titleInfoManga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="148dp"
+                android:layout_marginTop="64dp"
                 android:text="Title Manga"
                 android:textSize="25dp"
                 app:layout_constraintStart_toEndOf="@id/imgInfoManga"
