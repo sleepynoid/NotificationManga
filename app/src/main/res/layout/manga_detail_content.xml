@@ -38,11 +38,15 @@
         android:id="@+id/LinkShareButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary"
+        android:textColor="@color/background"
         android:text="Share" />
 
     <Button
         android:id="@+id/LinkReadButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary"
+        android:textColor="@color/background"
         android:text="Read" />
 </LinearLayout>

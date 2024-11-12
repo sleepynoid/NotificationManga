@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:title="My Toolbar"
+        app:titleTextColor="@color/background"
+        android:backgroundTint="@color/primary"
         android:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,18 +35,22 @@
         android:layout_marginBottom="60dp"
         android:paddingBottom="10dp"
         android:text="Get Latest Chapter"
+        android:textColor="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/mRecyclerView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:backgroundTint="@color/primary" />
 
     <Button
         android:id="@+id/readAllButton"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="Read All"
+        android:textColor="@color/background"
+        android:backgroundTint="@color/primary"
         app:layout_constraintTop_toBottomOf="@id/updateButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
