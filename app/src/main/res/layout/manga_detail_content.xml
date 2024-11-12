@@ -14,7 +14,6 @@
         android:layout_gravity="center"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <!-- Title TextView below the ImageView -->
     <TextView
         android:id="@+id/titleDetailManga"
         android:layout_width="wrap_content"
@@ -22,9 +21,9 @@
         android:layout_marginTop="12dp"
         android:text="Title Manga"
         android:textSize="20sp"
+        android:textColor="@color/text"
         android:textStyle="bold" />
 
-    <!-- Description TextView below the Title TextView -->
     <TextView
         android:id="@+id/descriptionDetailManga"
         android:layout_width="wrap_content"
@@ -32,6 +31,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="20dp"
         android:text="Description Manga"
+        android:textColor="@color/text"
         android:textSize="16sp" />
 
     <Button

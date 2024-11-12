@@ -27,6 +27,7 @@
                 android:text="Manga Now"
                 android:textAlignment="center"
                 android:textSize="50dp"
+                android:textColor="@color/text"
                 android:layout_marginBottom="50dp"/>
 
             <Button

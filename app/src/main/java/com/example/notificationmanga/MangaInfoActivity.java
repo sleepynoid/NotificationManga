@@ -46,7 +46,7 @@ public class MangaInfoActivity extends AppCompatActivity {
                 });
             } catch (IOException e) {
                 e.printStackTrace();
-                // Optional: handle error on the main thread if needed
+                // Optional: handle error on the main thread  if needed
             }
         });
     }

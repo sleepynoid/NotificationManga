@@ -46,17 +46,16 @@
                 app:layout_constraintStart_toEndOf="@id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Latest Chapter TextView below the Title TextView -->
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:text="Latest Chapter"
+                android:textColor="@color/text"
                 app:layout_constraintStart_toEndOf="@id/imageView"
                 app:layout_constraintTop_toBottomOf="@id/textView" />
 
-            <!-- Read Button aligned to the bottom-right corner of the card -->
             <Button
                 android:id="@+id/readbutton"
                 android:layout_width="wrap_content"
