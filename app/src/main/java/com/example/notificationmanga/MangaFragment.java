@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,66 +21,61 @@ public class MangaFragment extends Fragment {
     private ArrayList<Manga> mangaList = new ArrayList<>();
     private MangaAdapter adapter;
 
-    public MangaFragment() {
-        // Required empty public constructor
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_manga, container, false);
+        View view = inflater.inflate(R.layout.fragment_manga, container, false);
 
-        RecyclerView recyclerView = rootView.findViewById(R.id.mRecyclerView);
-        Button updateButton = rootView.findViewById(R.id.updateButton);
-        Button readAllButton = rootView.findViewById(R.id.readAllButton);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        RecyclerView recyclerView = view.findViewById(R.id.mRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setVisibility(View.GONE);
 
-        adapter = new MangaAdapter(requireContext(), mangaList);
+        adapter = new MangaAdapter(getActivity(), mangaList);
         recyclerView.setAdapter(adapter);
 
-        // Fetch Manga Data
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        service.execute(new Fetch());
-
-        // Update Button Logic
+        Button updateButton = view.findViewById(R.id.updateButton);
         updateButton.setOnClickListener(v -> {
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            executorService.execute(new Fetch());
+            ExecutorService service = Executors.newSingleThreadExecutor();
+            service.execute(new MangaFragment.Fetch(this));
             recyclerView.setVisibility(View.VISIBLE);
         });
 
-        // Read All Button Logic
+        Button readAllButton = view.findViewById(R.id.readAllButton);
         readAllButton.setOnClickListener(v -> {
             if (mangaList.isEmpty()) {
-                Toast.makeText(requireContext(), "There is no Manga", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "There is no Manga", Toast.LENGTH_SHORT).show();
                 return;
             }
             mangaList.clear();
             adapter.notifyDataSetChanged();
-            Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
         });
 
-        return rootView;
+        return view;
     }
 
-    private class Fetch implements Runnable {
+    public static class Fetch implements Runnable {
+        final MangaFragment mangaFragment;
+
+        public Fetch(MangaFragment fragment) {
+            this.mangaFragment = fragment;
+        }
+
         @Override
         public void run() {
-            String mangaJson;
-            ArrayList<Manga> fetchedMangaList;
+            ArrayList<Manga> mangaArrayList;
             try {
-                mangaJson = Manga.fetchManga("https://pastebin.com/raw/EV3wZywe");
-                fetchedMangaList = Manga.convertToArrayList(mangaJson);
-            } catch (IOException e) {
+                String mangaJson = Manga.fetchManga("https://pastebin.com/raw/EV3wZywe");
+                mangaArrayList = Manga.convertToArrayList(mangaJson);
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
-            requireActivity().runOnUiThread(() -> {
-                mangaList.clear();
-                mangaList.addAll(fetchedMangaList);
-                adapter.notifyDataSetChanged();
+            ArrayList<Manga> finalMangaArrayList = mangaArrayList;
+            mangaFragment.getActivity().runOnUiThread(() -> {
+                mangaFragment.mangaList.clear();
+                mangaFragment.mangaList.addAll(finalMangaArrayList);
+                mangaFragment.adapter.notifyDataSetChanged();
             });
         }
     }
